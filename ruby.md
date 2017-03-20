@@ -7,6 +7,8 @@ theme: Merriweather, 8
 
 ## GDI Rochester Chapter
 
+#### [https://github.com/chorn/intro\_to\_ruby](https://github.com/chorn/intro_to_ruby)
+
 ![fit](images/circle-gdi-logo.png)
 
 ---
