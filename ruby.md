@@ -2190,7 +2190,7 @@ def color=(new_color)
 end
 ```
 
-^ If we make it past our our pertinent negative, will our next pexression in the `if` *ever* be false?
+^ If we make it past our our pertinent negative, will our next expression in the `if` *ever* be false?
 
 ---
 
