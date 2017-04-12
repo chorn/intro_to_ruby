@@ -2521,10 +2521,61 @@ brick_store.inventory
 
 ---
 
+## How do we make a brick as part of a shipment?
+
+> Jack, as our boss, is in charge of receiving all shipments of bricks. When the shipment arrives, he effectively takes ownership of all the bricks until they are sold.
+
 ```ruby
+def one_new_brick
+  # ???
+end
+```
 
+^ Let's make this as a group.
 
+---
 
+## How do we add to our inventory?
+
+> Each shipment we receive has a total of 10 Bricks that are from a random assortment of acceptable colors.
+
+```ruby
+def receive_new_shipment!
+  # ???
+end
+```
+
+^ Let's make this as a group.
+
+---
+
+## Another Goal
+
+- Let's make a report that
+  - scans our inventory
+  - reports on the # of bricks for each color
+
+> Can we write this using only arrays?
+
+---
+
+## Is there an easier way?
+
+> What if we want to "store" the report as we go?
+
+^ Let's make this as a group!
+
+---
+
+## Group Programming
+
+> Let's add some more features to our `BrickStore`
+
+---
+
+## A Final `BrickStore`
+
+```ruby
 class Brick
   attr_accessor :owner
   attr_reader :color
@@ -2553,37 +2604,62 @@ class Brick
   end
 end
 
-# my_brick = Brick.new(color: "red", owner: "Daddy")
-
 class BrickStore
-  attr_accessor :name
+  attr_accessor :name, :default_delivery_size
   attr_reader :inventory
-  def initialize(name:)
+  def initialize(name:, default_delivery_size:)
     self.name = name
+    self.default_delivery_size = default_delivery_size
     @inventory = []
   end
 
   def approved_brick_colors
-    [ "red", "green", "blue", "yellow", "gray" ]
+    [ :red, :green, :blue, :yellow, :gray ]
   end
 
-  def receive_new_shipment!
-    10.times do
+  def one_new_brick
+    Brick.new(
+      owner: Brick::BRICK_MASTER,
+      color: approved_brick_colors.sample
+      )
+  end
+
+  def accept_delivery(delivery_size: default_delivery_size)
+
+    delivery_size.times do
       @inventory << one_new_brick
     end
   end
 
-  def one_new_brick
-    Brick.new(owner: "Jack", color: approved_brick_colors.sample)
+  def to_s
+    report = {}
+    approved_brick_colors.sort.each do |color|
+      report[color] = 0
+      inventory.each do |brick|
+        if brick.color == color
+          report[color] += 1
+        end
+      end
+    end
+    report.inspect
   end
-
 end
 
-brick_store = BrickStore.new(name: "Ruby's Bricks")
-brick_store.approved_brick_colors
-brick_store.receive_new_shipment!
-brick_store.receive_new_shipment!
-puts brick_store.inventory.join("\n")
+brick_store = BrickStore.new(name: "Ruby's Bricks", default_delivery_size: 5)
+brick_store.accept_delivery
+brick_store.accept_delivery(delivery_size: 25)
+puts brick_store.inventory.size
+puts brick_store
 ```
 
+^ This is a final `BrickStore` that the class, as a group, can work towards.
+
 ---
+
+## The End!
+
+- There is a lot more to Ruby, programming, and OO.
+- You are ready to tackle RubyMonk:
+  - [https://rubymonk.com/learning/books/1-ruby-primer](https://rubymonk.com/learning/books/1-ruby-primer)
+
+> Stuck? Try @chorn. 
